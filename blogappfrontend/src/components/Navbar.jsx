@@ -11,7 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const pages = [
   { id: 1, title: "DASHBORAD", url: "/" },
@@ -58,7 +58,8 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            BLOGAPP
+            <Link to={'/'} style={{textDecoration:'none', color:'white'}}>BLOGAPP</Link>
+            
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -135,7 +136,7 @@ function Navbar() {
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: 'white', display: 'block' }}
             >
-              <NavLink style={({ isActive }) => ({ fontWeight: isActive ? 700 : 400, textDecoration: 'none', color: 'black' })} to={page.url} > {page.title}</NavLink>
+              <NavLink style={({ isActive }) => ({ fontWeight: isActive ? 700 : 400, textDecoration: 'none', color: 'white' })} to={page.url} > {page.title}</NavLink>
             </Button>
             ))}
           </Box>
