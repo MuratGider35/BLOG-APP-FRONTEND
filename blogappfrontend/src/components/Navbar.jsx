@@ -12,15 +12,26 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link, NavLink } from "react-router-dom";
+import BadgeAvatars from "./BadgeAvatars";
 
 const pages = [
   { id: 1, title: "DASHBORAD", url: "/" },
   { id: 2, title: "NEW BLOG", url: "/newblog" },
   { id: 3, title: "ABOUT", url: "/about" },
 ];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const LogedOutSettings = [{ id: 1, title: "Login", url: "login" }];
+
+const LogedInSettings = [
+  { id: 1, title: "My Blogs", url: "myblogs" },
+  { id: 2, title: "Profile", url: "profile" },
+  { id: 3, title: "Logout", url: "/" },
+];
+
 
 function Navbar() {
+  const [token, setToken] = React.useState(true)
+ 
+  let settings = token ? LogedInSettings : LogedOutSettings;
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -58,8 +69,9 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            <Link to={'/'} style={{textDecoration:'none', color:'white'}}>BLOGAPP</Link>
-            
+            <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
+              BLOGAPP
+            </Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -132,19 +144,31 @@ function Navbar() {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
-              key={page.id}
-              onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: 'white', display: 'block' }}
-            >
-              <NavLink style={({ isActive }) => ({ fontWeight: isActive ? 700 : 400, textDecoration: 'none', color: 'white' })} to={page.url} > {page.title}</NavLink>
-            </Button>
+                key={page.id}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                <NavLink
+                  style={({ isActive }) => ({
+                    fontWeight: isActive ? 700 : 400,
+                    textDecoration: "none",
+                    color: "white",
+                  })}
+                  to={page.url}
+                >
+                  {" "}
+                  {page.title}
+                </NavLink>
+              </Button>
             ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                {token ? <BadgeAvatars/> : <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> }
+                
+                
               </IconButton>
             </Tooltip>
             <Menu
@@ -164,8 +188,19 @@ function Navbar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting.id} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">
+                    <NavLink
+                      onClick={() => setting.title === "Logout" && setToken(!token)}
+                      style={({ isActive }) => ({
+                        color: isActive ? "rgb(255, 47, 47)" : "black",
+                        textDecoration: "none",
+                      })}
+                      to={setting.url}
+                    >
+                      {setting.title}
+                    </NavLink>
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
