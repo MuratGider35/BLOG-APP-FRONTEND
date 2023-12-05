@@ -164,9 +164,10 @@ function Navbar({handleOpen}) {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {token ? <BadgeAvatars /> : <Typography onClick={handleOpen} px={2} py={1} sx={{backgroundColor:'yellow', borderRadius:3}}>GET STARTED</Typography>}
-              </IconButton>
+              {token ? <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <BadgeAvatars />  
+              </IconButton> :<Typography onClick={handleOpen} px={2} py={1} sx={{backgroundColor:'yellow', borderRadius:3, color:'black'}}>GET STARTED</Typography> }
+              
             </Tooltip>
             <Menu
               sx={{ mt: "45px" }}
