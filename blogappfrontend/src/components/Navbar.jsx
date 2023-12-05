@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
+
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
@@ -27,10 +27,9 @@ const LogedInSettings = [
   { id: 3, title: "Logout", url: "/" },
 ];
 
+function Navbar({handleOpen}) {
+  const [token, setToken] = React.useState(true);
 
-function Navbar() {
-  const [token, setToken] = React.useState(true)
- 
   let settings = token ? LogedInSettings : LogedOutSettings;
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -166,9 +165,7 @@ function Navbar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {token ? <BadgeAvatars/> : <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> }
-                
-                
+                {token ? <BadgeAvatars /> : <Typography onClick={handleOpen} px={2} py={1} sx={{backgroundColor:'yellow', borderRadius:3}}>GET STARTED</Typography>}
               </IconButton>
             </Tooltip>
             <Menu
@@ -191,7 +188,9 @@ function Navbar() {
                 <MenuItem key={setting.id} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">
                     <NavLink
-                      onClick={() => setting.title === "Logout" && setToken(!token)}
+                      onClick={() =>
+                        setting.title === "Logout" && setToken(!token)
+                      }
                       style={({ isActive }) => ({
                         color: isActive ? "rgb(255, 47, 47)" : "black",
                         textDecoration: "none",
